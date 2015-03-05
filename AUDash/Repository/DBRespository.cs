@@ -10,10 +10,12 @@ namespace AUDash.Repository
     {
         private SqlConnection GetConnection()
         {
-           string azureConnection = "Server=tcp:e5r6frgs22.database.windows.net,1433;Database=audashbAMiWR6WOt;User ID=tushar@e5r6frgs22;Password=India@123;Trusted_Connection=False;Encrypt=True;Connection Timeout=50;";
-           SqlConnection conn = new SqlConnection(azureConnection);
+            //string azureConnection = @"Data Source=USHYDBSURTI1\MSSQL2008R2;Initial Catalog=AUDashboard;Integrated Security=True";
+            //string azureConnection = "Server=tcp:e5r6frgs22.database.windows.net,1433;Database=audashbAMiWR6WOt;User ID=tushar@e5r6frgs22;Password=India@123;Trusted_Connection=False;Encrypt=True;Connection Timeout=50;";
+            //SqlConnection conn = new SqlConnection(azureConnection);
 
-           //SqlConnection conn = new SqlConnection("Data Source=USHYDTUSHARMA4\\Sqlexpress;Initial Catalog=AUDashboard;Integrated Security = true");
+            //SqlConnection conn = new SqlConnection("Data Source=USHYDTUSHARMA4\\Sqlexpress;Initial Catalog=AUDashboard;Integrated Security = true");
+            SqlConnection conn = new SqlConnection(@"Data Source=USHYDBSURTI1\MSSQL2008R2;Initial Catalog=AUDashboard;Integrated Security = true");
             return conn;
         }
 
@@ -75,7 +77,7 @@ namespace AUDash.Repository
 
         internal void SetReferenceData(string storageId, string storageData)
         {
-            SqlCommand cmd = new SqlCommand("update ReferenceData set StorageData = '" +  HttpUtility.HtmlEncode(storageData) + "' where StorageId = '" + storageId + "'", GetConnection());
+            SqlCommand cmd = new SqlCommand("update ReferenceData set StorageData = '" + HttpUtility.HtmlEncode(storageData) + "' where StorageId = '" + storageId + "'", GetConnection());
             cmd.Connection.Open();
             cmd.ExecuteNonQuery();
             cmd.Connection.Close();
@@ -93,13 +95,13 @@ namespace AUDash.Repository
 
             while (rdr.Read())
             {
-                dashboardCounts.Add(rdr.GetString(0), HttpUtility.HtmlDecode(rdr.GetString(1)));                
+                dashboardCounts.Add(rdr.GetString(0), HttpUtility.HtmlDecode(rdr.GetString(1)));
             }
 
             cmd.Connection.Close();
 
             return dashboardCounts;
-            
+
         }
     }
 }
